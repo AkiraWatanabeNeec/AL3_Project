@@ -1,5 +1,7 @@
-#include <KamataEngine.h>
+#include "KamataEngine.h"
 #include <Windows.h>
+
+using namespace KamataEngine;
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
@@ -10,6 +12,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		if (KamataEngine::Update()) {
 			break;
 		}
+
+
 	}
 	// エンジンの終了処理
 	KamataEngine::Finalize();
