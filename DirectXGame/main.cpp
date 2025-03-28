@@ -17,6 +17,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	gameScene->Initialize();
 
 	while (true) {
+		//------------------------------- 更新
+
 		// エンジンの更新
 		if (KamataEngine::Update()) {
 			break;
@@ -24,6 +26,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 		// ゲームシーンの更新
 		gameScene->Update();
+
+		//------------------------------- 描画
 
 		// 描画開始
 		dxCommon->PreDraw();
@@ -41,5 +45,6 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	// エンジンの終了処理
 	KamataEngine::Finalize();
+
 	return 0;
 }
