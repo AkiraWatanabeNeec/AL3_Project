@@ -12,7 +12,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	// DirectXCommonインスタンスの取得
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 
-	// ゲームシーンのインスタンス生成
+// ゲームシーンのインスタンス生成
 	GameScene* gameScene = new GameScene();
 	gameScene->Initialize();
 
