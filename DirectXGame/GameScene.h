@@ -3,13 +3,20 @@
 
 // ゲームシーン
 class GameScene {
+private:
+	uint32_t textureHandle_ = 0;
+	KamataEngine::Sprite* sprite_ = nullptr;
+
 public:
     // 初期化
-	void Initialize();
+    void Initialize();
 
     // 更新
-	void Update();
+    void Update();
 
     // 描画
-	void Draw();
+    void Draw();
+
+    // デストラクタ
+	~GameScene();
 };
