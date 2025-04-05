@@ -19,18 +19,25 @@ void GameScene::Initialize() {
 	soundDataHandle_ = Audio::GetInstance()->LoadWave("fanfare.wav");
 	voiceHandle_ = Audio::GetInstance()->PlayWave(soundDataHandle_, true, 0.1f);
 
-	// ライン描画テスト : カメラのアドレスを渡す
-	PrimitiveDrawer::GetInstance()->SetCamera(&camera_);
-
+	
 	// デバッグカメラ
 	int32_t width = DirectXCommon::GetInstance()->GetBackBufferWidth();
 	int32_t height = DirectXCommon::GetInstance()->GetBackBufferHeight();
+
+	// 軸方向の表示を有効にする
 	debugCamera_ = new DebugCamera(width, height);
+	AxisIndicator::GetInstance()->SetVisible(true);
+	AxisIndicator::GetInstance()->SetTargetCamera(&debugCamera_->GetCamera());
+
+	// ライン描画テスト : カメラのアドレスを渡す
+	PrimitiveDrawer::GetInstance()->SetCamera(&debugCamera_->GetCamera());
 }
 
 void GameScene::Update() {
 	// デバッグカメラの更新
-//	debugCamera_->Update();
+	debugCamera_->Update();
+
+	AxisIndicator::GetInstance()->Update();
 
 	// スプライトの今の座標を取得
 	Vector2 position = sprite_->GetPosition();
@@ -56,7 +63,7 @@ void GameScene::Update() {
 		Audio::GetInstance()->StopWave(voiceHandle_);
 	}
 	// デバッグカメラの更新
-	debugCamera_->Update();
+	//debugCamera_->Update();
 }
 
 void GameScene::Draw() {
@@ -87,6 +94,9 @@ void GameScene::Draw() {
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
+
+	// 軸方向の描画
+	AxisIndicator::GetInstance()->Draw();
 }
 
 GameScene::~GameScene() { 
