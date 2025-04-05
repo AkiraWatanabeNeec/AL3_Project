@@ -1,6 +1,8 @@
 #include "GameScene.h"
-#include "2d\ImGuiManager.h"
-#include "3d\PrimitiveDrawer.h"
+#include "KamataEngine.h"
+//#include "2d\ImGuiManager.h"
+//#include "3d\PrimitiveDrawer.h"
+//#include "3d\DebugCamera.h"
 
 using namespace KamataEngine;
 
@@ -20,9 +22,16 @@ void GameScene::Initialize() {
 	// ライン描画テスト : カメラのアドレスを渡す
 	PrimitiveDrawer::GetInstance()->SetCamera(&camera_);
 
+	// デバッグカメラ
+	int32_t width = DirectXCommon::GetInstance()->GetBackBufferWidth();
+	int32_t height = DirectXCommon::GetInstance()->GetBackBufferHeight();
+	debugCamera_ = new DebugCamera(width, height);
 }
 
 void GameScene::Update() {
+	// デバッグカメラの更新
+//	debugCamera_->Update();
+
 	// スプライトの今の座標を取得
 	Vector2 position = sprite_->GetPosition();
 
@@ -46,7 +55,8 @@ void GameScene::Update() {
 		// 音声停止
 		Audio::GetInstance()->StopWave(voiceHandle_);
 	}
-
+	// デバッグカメラの更新
+	debugCamera_->Update();
 }
 
 void GameScene::Draw() {
@@ -58,7 +68,9 @@ void GameScene::Draw() {
 
 	// 3Dモデル描画
 	//PrimitiveDrawer::GetInstance()->DrawLine3d({0,0,0},{10,0,0},{1.0f, 0.0f, 0.0f, 1.0f});   // エラーになった
-	model_->Draw(worldTransform_, camera_, textureHandle_);
+	//model_->Draw(worldTransform_, camera_, textureHandle_);
+	model_->Draw(worldTransform_, debugCamera_->GetCamera(), textureHandle_);	// デバッグカメラを利用する
+
 
 	//PrimitiveDrawer::GetInstance()->DrawLine3d({0,0,0},{10,0,0},{1.0f, 0.0f, 0.0f, 1.0f});   // モデル描画の前で大丈夫だったが…
 
@@ -80,4 +92,5 @@ void GameScene::Draw() {
 GameScene::~GameScene() { 
 	delete sprite_;
 	delete model_;
+	delete debugCamera_;
 }
