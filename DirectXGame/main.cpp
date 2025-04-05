@@ -9,6 +9,11 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	// エンジンの初期化
 	KamataEngine::Initialize(L"LE2C_00_ワタナベ_アキラ");
 
+#ifdef _DEBUG
+	//★ ImGuiManagerインスタンスの取得
+	ImGuiManager* imguiManager = ImGuiManager::GetInstance();
+#endif
+
 	// DirectXCommonインスタンスの取得
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 
@@ -24,8 +29,18 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 			break;
 		}
 
+#ifdef _DEBUG
+		//★ ImGui受付開始
+		imguiManager->Begin();
+#endif
+
 		// ゲームシーンの更新
 		gameScene->Update();
+
+#ifdef _DEBUG
+		//★ ImGui受付終了
+		imguiManager->End();
+#endif
 
 		//------------------------------- 描画
 
@@ -34,6 +49,11 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 		// ゲームシーンの描画
 		gameScene->Draw();
+
+#ifdef _DEBUG
+		//★ ImGui描画
+		imguiManager->Draw();
+#endif
 
 		// 描画終了
 		dxCommon->PostDraw();

@@ -1,4 +1,5 @@
 #include "GameScene.h"
+#include "2d\ImGuiManager.h"
 
 using namespace KamataEngine;
 
@@ -13,7 +14,7 @@ void GameScene::Initialize() {
 
 	// サウンドデータの読み込み
 	soundDataHandle_ = Audio::GetInstance()->LoadWave("fanfare.wav");
-	voiceHandle_ = Audio::GetInstance()->PlayWave(soundDataHandle_, true);
+	voiceHandle_ = Audio::GetInstance()->PlayWave(soundDataHandle_, true, 0.5f);
 
 }
 
@@ -24,6 +25,14 @@ void GameScene::Update() {
 	// 座標を {2,1} 移動
 	position.x += 2.0f;
 	position.y += 1.0f;
+
+#ifdef _DEBUG
+	// デモを見ることができる
+	//ImGui::ShowDemoWindow();
+
+	// ImGuiで position の値を表示してみる
+	//ImGui::Text("position (%4.0f, %4.0f)", position.x, position.y);
+#endif
 
 	// 移動した座標をスプライトに反映
 	sprite_->SetPosition(position);
@@ -49,7 +58,6 @@ void GameScene::Draw() {
 	// 3Dモデル描画後処理
 	Model::PostDraw();
 
-/*
 	// スプライト描画前処理
 	Sprite::PreDraw(dxCommon->GetCommandList());
 
@@ -58,7 +66,6 @@ void GameScene::Draw() {
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
-*/
 }
 
 GameScene::~GameScene() { 
